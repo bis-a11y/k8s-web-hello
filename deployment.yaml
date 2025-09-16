@@ -1,9 +1,11 @@
-apiVersion: apps/v1
+aapiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-web-hello
+  labels:
+    app: k8s-web-hello
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: k8s-web-hello
@@ -14,13 +16,6 @@ spec:
     spec:
       containers:
       - name: k8s-web-hello
-        image: YOUR_DOCKERHUB_USERNAME/k8s-web-hello:latest
+        image: ghcr.io/YOUR_GITHUB_USERNAME/k8s-web-hello:latest
         ports:
         - containerPort: 3000
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
