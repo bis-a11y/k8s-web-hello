@@ -25,8 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: echo "Add your test command here"
+  
 
   build-and-push:
     needs: test
@@ -43,7 +42,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.BISHARA_SECREATE}}
 
       - name: Build and push image to GHCR
         uses: docker/build-push-action@v4
