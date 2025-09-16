@@ -21,8 +21,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Run tests (add your test command here)
-      run: echo "Add your test command here"
+    
 
   build-and-push:
     needs: test
@@ -35,18 +34,20 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
     
-    - name: Login to Docker Hub
+    
+    - name: Log in to GitHub Container Registry
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     
-    - name: Build and push
+    - name: Build and push image to GHCR
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/k8s-web-hello:latest
+        tags: ghcr.io/${{ github.repository_owner }}/k8s-web-hello:latest
 
   deploy:
     needs: build-and-push
@@ -64,5 +65,5 @@ jobs:
           deployment.yaml
           service.yaml
         images: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/k8s-web-hello:latest
+          ghcr.io/${{ github.repository_owner }}/k8s-web-hello:latest
         kubectl-version: 'latest'
