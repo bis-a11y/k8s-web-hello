@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: k8s-web-hello
-        image: ghcr.io/YOUR_GITHUB_USERNAME/k8s-web-hello:latest
+        image: ghcr.io/bis_a11y/k8s-web-hello:latest
         ports:
         - containerPort: 3000
         resources:
